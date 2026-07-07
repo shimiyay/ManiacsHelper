@@ -1,8 +1,6 @@
 package com.maniacshelper;
 
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
 
 import java.util.HashSet;
 import java.util.Set;

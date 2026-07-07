@@ -1,5 +1,8 @@
 package com.maniacshelper;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -67,11 +70,10 @@ public class CarryManager {
         for (CarrySession session : activeCarries.values()) {
             session.currentRuns++;
             if (session.currentRuns >= session.maxRuns) {
-                var client = net.minecraft.client.MinecraftClient.getInstance();
+                var client = Minecraft.getInstance();
                 if (client.player != null) {
-                    client.player.sendMessage(
-                        net.minecraft.text.Text.literal("§a[§2ManiacsHelper§a] §f" + session.playerName + " §ahas completed their carry (" + session.currentRuns + "/" + session.maxRuns + ")"),
-                        false
+                    client.player.sendSystemMessage(
+                        Component.literal("§a[§2ManiacsHelper§a] §f" + session.playerName + " §ahas completed their carry (" + session.currentRuns + "/" + session.maxRuns + ")")
                     );
                 }
             }
@@ -86,9 +88,9 @@ public class CarryManager {
                 sb.append(s.playerName).append(" ").append(s.currentRuns).append("/").append(s.maxRuns);
                 first = false;
             }
-            var client = net.minecraft.client.MinecraftClient.getInstance();
-            if (client.getNetworkHandler() != null) {
-                client.getNetworkHandler().sendChatCommand("pc " + sb.toString());
+            var client = Minecraft.getInstance();
+            if (client.getConnection() != null) {
+                client.getConnection().sendCommand("pc " + sb.toString());
             }
         }
     }

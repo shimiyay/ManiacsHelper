@@ -1,10 +1,10 @@
 package com.maniacshelper;
 
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderTickCounter;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.resources.Identifier;
 
 public class HudOverlay {
 
@@ -17,16 +17,18 @@ public class HudOverlay {
     }
 
     public void register() {
-        HudRenderCallback.EVENT.register(this::render);
+        HudElementRegistry.addLast(
+            Identifier.fromNamespaceAndPath("maniacshelper", "hud"),
+            this::render
+        );
     }
 
-    private void render(DrawContext drawContext, RenderTickCounter tickCounter) {
+    private void render(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         if (carryManager.getActiveCarries().isEmpty()) return;
 
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client.player == null || client.options.hudHidden) return;
+        Minecraft client = Minecraft.getInstance();
+        if (client.player == null || client.options.hideGui) return;
 
-        TextRenderer textRenderer = client.textRenderer;
         int x = configManager.getHudX();
         int y = configManager.getHudY();
         int lineHeight = 10;
@@ -35,7 +37,7 @@ public class HudOverlay {
         for (CarryManager.CarrySession session : carryManager.getActiveCarries().values()) {
             String numberColor = session.currentRuns >= session.maxRuns ? "§a" : "§7";
             String text = "§e" + session.playerName + " " + numberColor + session.currentRuns + "/" + session.maxRuns;
-            drawContext.drawText(textRenderer, text, x, y + index * lineHeight, 0xFFFFFFFF, true);
+            guiGraphics.text(client.font, text, x, y + index * lineHeight, 0xFFFFFFFF, true);
             index++;
         }
     }

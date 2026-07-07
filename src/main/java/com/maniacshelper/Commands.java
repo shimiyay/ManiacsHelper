@@ -6,10 +6,10 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
 
 public class Commands {
 
@@ -49,13 +49,13 @@ public class Commands {
                             }
 
                             if (!inParty) {
-                                ctx.getSource().sendFeedback(Text.literal(
+                                ctx.getSource().sendFeedback(Component.literal(
                                     "§c[§4ManiacsHelper§c] §f" + inputPlayer + " §cis not in the party! Run /p l to update the list."));
                                 return 0;
                             }
 
                             carryManager.addCarry(resolvedPlayerName, maxRuns);
-                            ctx.getSource().sendFeedback(Text.literal(
+                            ctx.getSource().sendFeedback(Component.literal(
                                 "§a[§2ManiacsHelper§a] §f" + resolvedPlayerName + " §aadded with a max of §e" + maxRuns + " §aruns."));
                             return 1;
                         })
@@ -70,13 +70,13 @@ public class Commands {
                             String player = StringArgumentType.getString(ctx, "player");
                             int amount = IntegerArgumentType.getInteger(ctx, "amount");
                             if (!carryManager.hasActiveCarry(player)) {
-                                ctx.getSource().sendFeedback(Text.literal(
+                                ctx.getSource().sendFeedback(Component.literal(
                                     "§c[§4ManiacsHelper§c] §f" + player + " §cis not being tracked."));
                                 return 0;
                             }
                             carryManager.removeRuns(player, amount);
                             var session = carryManager.getCarry(player);
-                            ctx.getSource().sendFeedback(Text.literal(
+                            ctx.getSource().sendFeedback(Component.literal(
                                 "§a[§2ManiacsHelper§a] §f" + player + " §ais now at §e" + session.currentRuns + "/" + session.maxRuns + "."));
                             return 1;
                         })
@@ -89,12 +89,12 @@ public class Commands {
                     .executes(ctx -> {
                         String player = StringArgumentType.getString(ctx, "player");
                         if (!carryManager.hasActiveCarry(player)) {
-                            ctx.getSource().sendFeedback(Text.literal(
+                            ctx.getSource().sendFeedback(Component.literal(
                                 "§c[§4ManiacsHelper§c] §f" + player + " §cis not being tracked."));
                             return 0;
                         }
                         carryManager.removeCarry(player);
-                        ctx.getSource().sendFeedback(Text.literal(
+                        ctx.getSource().sendFeedback(Component.literal(
                             "§a[§2ManiacsHelper§a] §f" + player + " §aremoved from tracker."));
                         return 1;
                     })
@@ -102,17 +102,14 @@ public class Commands {
             )
             .then(literal("config")
                 .executes(ctx -> {
-                    FabricClientCommandSource source = ctx.getSource();
-                    source.getClient().execute(() -> {
-                        source.getClient().setScreen(new ConfigScreen(source.getClient().currentScreen, carryManager, configManager));
-                    });
+                    ManiacsHelper.openConfigNextTick = true;
                     return 1;
                 })
                 .then(literal("chat_message")
                     .then(literal("on")
                         .executes(ctx -> {
                             configManager.setAutoPartyChat(true);
-                            ctx.getSource().sendFeedback(Text.literal(
+                            ctx.getSource().sendFeedback(Component.literal(
                                 "§a[§2ManiacsHelper§a] §aAuto party chat enabled."));
                             return 1;
                         })
@@ -120,7 +117,7 @@ public class Commands {
                     .then(literal("off")
                         .executes(ctx -> {
                             configManager.setAutoPartyChat(false);
-                            ctx.getSource().sendFeedback(Text.literal(
+                            ctx.getSource().sendFeedback(Component.literal(
                                 "§a[§2ManiacsHelper§a] §aAuto party chat disabled."));
                             return 1;
                         })
