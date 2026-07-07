@@ -26,3 +26,7 @@ A client-side Fabric mod designed for Hypixel Skyblock dungeon carriers to track
    - **Windows:** `gradlew.bat clean build`
    - **Linux/macOS:** `./gradlew clean build`
 3. The compiled mod will be at `build/libs/maniacshelper-1.0.0.jar`.
+
+## 🐛 Bugs & Support
+
+If you find any bugs, experience crashes, or have any suggestions to improve the mod, feel free to contact me directly on Discord: **@moya_neutron**.
