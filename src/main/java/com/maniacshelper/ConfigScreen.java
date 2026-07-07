@@ -128,7 +128,7 @@ public class ConfigScreen extends Screen {
     public void onClose() {
         configManager.setHudPosition(configX, configY);
         if (minecraft != null) {
-            minecraft.setScreen(parent);
+            minecraft.setScreenAndShow(parent);
         }
     }
 

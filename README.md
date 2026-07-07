@@ -1,6 +1,6 @@
-# ManiacsHelper (Minecraft 26.1)
+# ManiacsHelper (Minecraft 26.2 Port)
 
-This branch contains the updated port of ManiacsHelper for Minecraft 26.1. It features a complete architecture migration from Yarn to **Official Mojang Mappings** and utilizes the updated Fabric Loom environment.
+This branch contains the updated port of ManiacsHelper for Minecraft 26.2, maintaining the codebase under **Official Mojang Mappings** and leveraging the latest stable Fabric development dependencies.
 
 ## Features & Commands
 - **Carry Tracker:** Monitor multiple active carry sessions simultaneously.
@@ -15,21 +15,21 @@ This branch contains the updated port of ManiacsHelper for Minecraft 26.1. It fe
 - `/mh config chat_message <on/off>` - Toggles automated party chat updates.
 
 ## Technical Specifications
-- **Minecraft Version:** 26.1
+- **Minecraft Version:** 26.2
 - **Fabric Loader:** >=0.19.3
-- **Fabric API Version:** 0.145.1+26.1
+- **Fabric API Version:** 0.154.1+26.2
 - **Mappings:** Official Mojang Mappings (via Loom 1.17-SNAPSHOT)
 
 ## How to Compile Yourself
 
 ### Prerequisites
 - **Java Development Kit (JDK):** Version 25 (64-bit).
-- **Environment Variable:** Ensure `JAVA_HOME` points directly to your JDK 25 directory (e.g., `C:\Program Files\Java\jdk-25.0.2\`).
+- **Environment Variable:** Ensure `JAVA_HOME` points directly to your JDK 25 directory.
 
 ### Compilation Steps
-1. Ensure you are on the `mc-26.1` branch (`git checkout mc-26.1`).
-2. Open a terminal in the project root directory.
-3. Run the build command:
+1. Make sure you are currently on the `mc-26.2` branch (`git checkout mc-26.2`).
+2. Open your terminal in the project root folder.
+3. Clean and compile the codebase using the bundled Gradle wrapper:
    - **Windows:** `gradlew.bat clean build`
    - **Linux/macOS:** `./gradlew clean build`
-4. The compiled mod will be at `build/libs/maniacshelper-1.0.0.jar`.
+4. Grab your compiled mod from `build/libs/maniacshelper-1.0.0.jar` and drop it into your Minecraft 26.2 profile.

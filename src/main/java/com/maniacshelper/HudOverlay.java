@@ -27,7 +27,7 @@ public class HudOverlay {
         if (carryManager.getActiveCarries().isEmpty()) return;
 
         Minecraft client = Minecraft.getInstance();
-        if (client.player == null || client.options.hideGui) return;
+        if (client.player == null || client.gui.hud.isHidden()) return;
 
         int x = configManager.getHudX();
         int y = configManager.getHudY();

@@ -22,7 +22,7 @@ public class ManiacsHelper implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (openConfigNextTick) {
-                client.setScreen(new ConfigScreen(null, carryManager, configManager));
+                client.setScreenAndShow(new ConfigScreen(null, carryManager, configManager));
                 openConfigNextTick = false;
             }
         });
