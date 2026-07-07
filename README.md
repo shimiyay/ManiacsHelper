@@ -33,3 +33,7 @@ This branch contains the updated port of ManiacsHelper for Minecraft 26.2, maint
    - **Windows:** `gradlew.bat clean build`
    - **Linux/macOS:** `./gradlew clean build`
 4. Grab your compiled mod from `build/libs/maniacshelper-1.0.0.jar` and drop it into your Minecraft 26.2 profile.
+
+## 🐛 Bugs & Support
+
+If you find any bugs, experience crashes, or have any suggestions to improve the mod, feel free to contact me directly on Discord: **@moya_neutron**.
